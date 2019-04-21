@@ -5,7 +5,7 @@ This is the final project for Udacity's [Full Stack Web Developer Nanodegree](ht
 This page explains how to secure and set up a Linux distribution on a virtual machine, install and configure a web and database server to host a web application.
 - The Linux distribution is [Ubuntu](https://www.ubuntu.com/download/server) 16.04 LTS.
 - The virtual private server is [Amazon Lighsail](https://lightsail.aws.amazon.com/).
-- The web application is my [Item Catalog project](https://github.com/boisalai/udacity-catalog-app) created earlier in this Nanodegree program.
+- The web application is my [Item Catalog project](https://github.com/Anurag212017/Item-catlog) created earlier in this Nanodegree program.
 - The database server is [PostgreSQL](https://www.postgresql.org/).
 
 
@@ -155,7 +155,7 @@ The `unattended-upgrades` package can be used to automatically install important
 
 <a name="step_5_3"></a>
 ### Step 5.3: Updated packages to most recent versions
-:white_check_mark: This step was added after second review to meet the specifications.
+
 
 Some packages have not been updated because the server need to be rebooted. I found the solution [here](https://www.digitalocean.com/community/questions/updating-ubuntu-14-04-security-updates).
 
