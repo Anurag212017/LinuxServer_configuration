@@ -34,7 +34,7 @@ You can visit http://13.126.103.33/ or http://ec2-13-126-103-33.ap-south-1.compu
 - Move this private key file named `LightsailDefaultKey-*.pem` into the local folder `~/.ssh` and rename it `lightsail_key.rsa`.
 - In your terminal, type: `chmod 600 ~/.ssh/lightsail_key.rsa`.
 - To connect to the instance via the terminal: `ssh -i ~/.ssh/lightsail_key.rsa ubuntu@13.126.103.33`,
-  where `13.59.39.163` is the public IP address of the instance.
+  where `13.126.103.33` is the public IP address of the instance.
 
 
 
@@ -111,7 +111,7 @@ then the `Networking` tab, and then change the firewall configuration to match t
 <a name="step_5_1"></a>
 ### Step 5.1: Use `Fail2Ban` to ban attackers
 
-:white_check_mark: This step was added after first review to meet the specifications.
+
 
 `Fail2Ban` is an intrusion prevention software framework that protects computer servers from brute-force attacks.
 - Install Fail2Ban: `sudo apt-get install fail2ban`.
@@ -133,7 +133,7 @@ then the `Networking` tab, and then change the firewall configuration to match t
 
 <a name="step_5_2"></a>
 ### Step 5.2: Automatically install updates
-:white_check_mark: This step was added after first review to meet the specifications.
+
 
 The `unattended-upgrades` package can be used to automatically install important system updates.
 - Enable automatic (security) updates: `sudo apt-get install unattended-upgrades`.
@@ -372,9 +372,9 @@ run `sudo -l` and enter the password again. The output should be like this:
 
 - While logged in as `grader`, create `/var/www/catalog/` directory.
 - Change to that directory and clone the catalog project:<br>
-`sudo git clone https://github.com/boisalai/udacity-catalog-app.git catalog`.
+`sudo git clone "url of your github repository"`.
 - From the `/var/www` directory, change the ownership of the `catalog` directory to `grader` using: `sudo chown -R grader:grader catalog/`.
-- Change to the `/var/www/catalog/catalog` directory.
+- Change to the `/var/www/catalog/Item-catlog` directory.
 - Rename the `application.py` file to `__init__.py` using: `mv application.py __init__.py`.
 
 - In `__init__.py`, replace:
@@ -383,13 +383,13 @@ run `sudo -l` and enter the password again. The output should be like this:
   app.run()
   ```
 
-- In `database.py`, replace:
+- In `database_setup.py`, replace:
    ```
    # engine = create_engine("sqlite:///catalog.db")
    engine = create_engine('postgresql://catalog:PASSWORD@localhost/catalog')
    ```
 
-### Step 13.2: Authenticate login through Google
+<!-- ### Step 13.2: Authenticate login through Google
 
 - Go to [Google Cloud Plateform](https://console.cloud.google.com/).
 - Click `APIs & services` on left menu.
@@ -400,9 +400,9 @@ origins.
 - Add http://ec2-13-126-103-33.ap-south-1.compute.amazonaws.com/oauth2callback
 as authorized redirect URI.
 - Download the corresponding JSON file, open it et copy the contents.
-- Open `/var/www/catalog/Item-catlog/client_secret.json` and paste the previous contents into the this file.
-- Replace the client ID to line 25 of the `templates/login.html` file in the project directory.
-
+- Open `/var/www/catalog/Item-catlog/client_secrets.json` and paste the previous contents into the this file.
+- Replace the client ID  of the `templates/login.html` file in the project directory.
+ -->
 
 
 ### Step 14.1: Install the virtual environment and dependencies
@@ -513,35 +513,6 @@ following lines to configure the virtual host:
 - Flask documentation, [Working with Virtual Environments](http://flask.pocoo.org/docs/0.12/deploying/mod_wsgi/#working-with-virtual-environments)
 
 
-<!-- ### Step 14.4: Set up the database schema and populate the database
-
-- Edit `/var/www/catalog/catalog/data.py`.
-- Replace `lig.random_para(250)` by `lig.random_para(240)` on lines 86, 143, 191, 234 and 280.
-
-- Add the these two lines at the beginning of the file.
-
-  ```
-  import sys
-  sys.path.insert(0, "/var/www/catalog/catalog/venv3/lib/python3.5/site-packages")
-  ```
-
-- Add the following lines under `create_db()`.
-
-  ```
-  # Create database.
-  create_db()
-
-  # Delete all rows.
-  session.query(Item).delete()
-  session.query(Category).delete()
-  session.query(User).delete()
-  ```
-
-- From the `/var/www/catalog/catalog/` directory,
-activate the virtual environment: `. venv3/bin/activate`.
-- Run: `python data.py`.
-- Deactivate the virtual environment: `deactivate`. -->
-
 ### Step 14.5: Disable the default Apache site
 
 - Disable the default Apache site: `sudo a2dissite 000-default.conf`.
@@ -563,69 +534,14 @@ The following prompt will be returned:
 
 
 
-<!-- ## Fix some issues
 
-### Step 15.1: Log in with Google OAuth
-
-- When I try to log in with Google OAuth 2.0, I get the following error:
-  ```
-  TypeError: the JSON object must be str, not 'bytes'
-  ```
-- To correct that problem, edit `views/auth.py` using: `sudo nano -c auth.py`.
-- Near line 60, add `.decode("utf-8")` to the `request(url, "GET")` instruction like that:
-  ```
-  h = httplib2.Http()
-  # result = json.loads(h.request(url, "GET")[1]
-  result = json.loads(h.request(url, "GET")[1].decode("utf-8"))
-  ```
-- Save and exit using CTRL+X and confirm with Y.
-- Reload Apache: `sudo service apache2 reload`.
- -->
 
 ## Useful commands
 
  - To get log messages from Apache server: `sudo tail /var/log/apache2/error.log`.
  - To restart Apache: `sudo service apache2 restart`.
 
-<!-- ## Folder structure
 
-After these operations, the folder structure should look like: -->
-
-<!-- ```
-/var/www/catalog
-    |-- catalog.wsgi
-    |__ /catalog             # Our Application Module
-         |-- __init__.py
-         |-- data.py
-         |-- database.py
-         |-- /models
-              |-- __init__.py
-              |-- category.py
-              |-- item.py
-              |__ user.py   
-         |-- /static
-              |__ styles.css
-         |-- /templates
-              |-- about.html
-              |-- base.html
-              |-- categories.html
-              |-- delete_item.html
-              |-- edit_item.html
-              |-- login.html
-              |-- new_item.html
-              |__ show_item.html
-         |-- /utils
-              |__ lorem_ipsum_generator.py
-         |-- /venv3          # Virtual Environment
-         |__ /views
-              |-- __init__.py
-              |-- about.py
-              |-- api.py
-              |-- auth.py
-              |-- category_view.py
-              |-- item_view.py
-              |__ user_view.py
-``` -->
 
 ## Other Helpful Resources
 
