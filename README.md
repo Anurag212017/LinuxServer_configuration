@@ -168,7 +168,7 @@ Some packages have not been updated because the server need to be rebooted. I fo
 
 - Logged back in, and I now see this message:
   ```
-  Alains-MBP:udacity-linux-server-configuration boisalai$ ssh -i ~/.ssh/lightsail_key.rsa -p 2200 ubuntu@13.126.103.33
+  Alains-MBP:udacity-linux-server-configuration anura$ ssh -i ~/.ssh/lightsail_key.rsa -p 2200 ubuntu@13.126.103.33
   Welcome to Ubuntu 16.04.3 LTS (GNU/Linux 4.4.0-1039-aws x86_64)
 
    * Documentation:  https://help.ubuntu.com
@@ -243,7 +243,7 @@ run `sudo -l` and enter the password again. The output should be like this:
   - Give the permissions: `chmod 700 .ssh` and `chmod 644 .ssh/authorized_keys`
   - Check in `/etc/ssh/sshd_config` file if `PasswordAuthentication` is set to `no`
   - Restart SSH: `sudo service ssh restart`
-- On the local machine, run: `ssh -i ~/.ssh/grader_key -p 2200 grader@13.59.39.163`.
+- On the local machine, run: `ssh -i ~/.ssh/grader_key -p 2200 grader@13.126.103.33`.
 
 
 
@@ -261,7 +261,7 @@ run `sudo -l` and enter the password again. The output should be like this:
 - While logged in as `grader`, configure the time zone: `sudo dpkg-reconfigure tzdata`. You should see something like that:
 
   ```
-  Current default time zone: 'America/Montreal'
+  Current default time zone: 'Kolkata'
   Local time is now:      Thu April 19 21:55:16 EDT 2019.
   Universal Time is now:  Fri April 20 01:55:16 UTC 2019.
   ```
@@ -458,7 +458,7 @@ following lines to configure the virtual host:
 	  ServerName 13.126.103.33
     ServerAlias  http://ec2-13-126-103-33.ap-south-1.compute.amazonaws.com
 	  WSGIScriptAlias / /var/www/catalog/catalog.wsgi
-	  <Directory /var/www/catalog/catalog/>
+	  <Directory /var/www/catalog/Item-catlog/>
 	  	Order allow,deny
 		  Allow from all
 	  </Directory>
